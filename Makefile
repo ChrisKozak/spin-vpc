@@ -8,9 +8,9 @@ all: plan
 plan: *.tf get
 	terraform plan -var allowed_ip=$(MY_IP)
 
-apply: terraform.tfstate get
+apply: terraform.tfstate
 
-destroy:
+destroy: ~/.ssh/spin-key
 	terraform destroy -force -var allowed_ip=$(MY_IP)
 	rm -f terraform.tfstate terraform.tfstate.backup
 	rm -f .tmp/*_HOST
@@ -23,7 +23,7 @@ test: export BASTION_HOST = $(shell cat .tmp/BASTION_HOST)
 test: apply .tmp/BASTION_HOST Gemfile.lock
 	./run-specs.sh
 
-terraform.tfstate: *.tf modules/*/*.tf
+terraform.tfstate: *.tf modules/*/*.tf ~/.ssh/spin-key get
 	terraform apply -var allowed_ip=$(MY_IP)
 
 .tmp/BASTION_HOST: terraform.tfstate
@@ -33,3 +33,5 @@ terraform.tfstate: *.tf modules/*/*.tf
 Gemfile.lock: Gemfile
 	bundle install
 
+~/.ssh/spin-key:
+	ssh-keygen -N '' -C 'spin-key' -f ~/.ssh/spin-key

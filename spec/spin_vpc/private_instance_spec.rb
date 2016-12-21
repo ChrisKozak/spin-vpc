@@ -1,7 +1,7 @@
 require 'spec_helper_remote'
 require 'spec_helper_aws'
 
-describe ec2_running('GoCD Server') do
+describe ec2_running('Spin VPC Test Server') do
 
   before(:all) do
     host = described_class.private_ip

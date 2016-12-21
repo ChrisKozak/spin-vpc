@@ -6,7 +6,7 @@ provider "aws" {
 
 module "vpc" {
   source = "modules/vpc"
-  service_name = "GoCD"
+  service_name = "Spin VPC Tester"
   environment = "${var.environment}"
   allowed_ip = "${var.allowed_ip}"
 }

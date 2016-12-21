@@ -6,7 +6,7 @@ set :backend, :ssh
 
 def get_ssh_options(host, bastion_host = nil)
   user = 'ubuntu'
-  private_key_file = '/home/vagrant/.ssh/spin-gocd-key'
+  private_key_file = '/home/vagrant/.ssh/spin-key'
   options = Net::SSH::Config.for(host)
   options[:auth_methods] = ['publickey']
   options[:user] = user

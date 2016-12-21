@@ -4,11 +4,11 @@ variable "environment" {
 }
 
 variable "public_key_path" {
-  default = "/home/vagrant/.ssh/spin-gocd-key.pub"
+  default = "/home/vagrant/.ssh/spin-key.pub"
 }
 
 variable "private_key_path" {
-  default = "/home/vagrant/.ssh/spin-gocd-key"
+  default = "/home/vagrant/.ssh/spin-key"
 }
 
 variable "key_name" {

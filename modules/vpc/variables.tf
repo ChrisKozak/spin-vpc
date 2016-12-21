@@ -20,14 +20,14 @@ variable "environment" {
 variable "allowed_ip" {}
 
 variable "public_key_path" {
-  default = "/home/vagrant/.ssh/spin-gocd-key.pub"
+  default = "/home/vagrant/.ssh/spin-key.pub"
 }
 
 variable "private_key_path" {
-  default = "/home/vagrant/.ssh/spin-gocd-key"
+  default = "/home/vagrant/.ssh/spin-key"
 }
 
 variable "key_name" {
-  default = "bastion_key"
+  default = "spin_key"
 }
 
