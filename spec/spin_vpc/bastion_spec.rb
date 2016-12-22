@@ -4,10 +4,13 @@ require 'spec_helper_aws'
 describe ec2_running('SSH Bastion Host') do
 
   before(:all) do
-    host = described_class.public_ip
-    options = get_ssh_options(host)
+    target_host = described_class.public_ip
+    options = get_ssh_options(
+      target_host,
+      target_host_key: '/home/vagrant/.ssh/spin-bastion-key'
+    )
     set :ssh_options, options
-    set :host, options[:host_name] || host
+    set :host, target_host
   end
 
   context 'within the environment' do

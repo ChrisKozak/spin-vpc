@@ -8,12 +8,12 @@ resource "aws_instance" "bastion_host" {
   ami = "${lookup(var.aws_amis, var.aws_region)}"
   vpc_security_group_ids = ["${aws_security_group.bastion_host_access.id}"]
   subnet_id = "${aws_subnet.public_subnet.id}"
-  key_name = "${aws_key_pair.bastion_keys.id}"
+  key_name = "${aws_key_pair.bastion_ssh_key_pair.id}"
 }
 
-resource "aws_key_pair" "bastion_keys" {
+resource "aws_key_pair" "bastion_ssh_key_pair" {
   key_name   = "bastion-${var.environment}"
-  public_key = "${file(var.public_key_path)}"
+  public_key = "${file(var.bastion_ssh_key_public_file)}"
 }
 
 resource "aws_eip" "bastion_eip" {

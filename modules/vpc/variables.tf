@@ -9,25 +9,10 @@ variable "aws_amis" {
   }
 }
 
-variable "service_name" {
-  default = "not_set"
-}
+variable "service_name" {}
 
-variable "environment" {
-  default = "not_set"
-}
+variable "environment" {}
 
 variable "allowed_ip" {}
 
-variable "public_key_path" {
-  default = "/home/vagrant/.ssh/spin-key.pub"
-}
-
-variable "private_key_path" {
-  default = "/home/vagrant/.ssh/spin-key"
-}
-
-variable "key_name" {
-  default = "spin_key"
-}
-
+variable "bastion_ssh_key_public_file" {}

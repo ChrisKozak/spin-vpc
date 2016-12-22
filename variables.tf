@@ -1,18 +1,6 @@
 
 variable "environment" {
-  default = "sandbox"
-}
-
-variable "public_key_path" {
-  default = "/home/vagrant/.ssh/spin-key.pub"
-}
-
-variable "private_key_path" {
-  default = "/home/vagrant/.ssh/spin-key"
-}
-
-variable "key_name" {
-  default = "infraworkbox"
+  default = "VPC Testing Sandbox"
 }
 
 variable "aws_region" {
@@ -23,6 +11,14 @@ variable "aws_amis" {
   default = {
     eu-west-1 = "ami-ac772edf"
   }
+}
+
+variable "test_instance_ssh_key_public_file" {
+  default = "/home/vagrant/.ssh/spin-test-instance-key.pub"
+}
+
+variable "bastion_ssh_key_public_file" {
+  default = "/home/vagrant/.ssh/spin-bastion-key.pub"
 }
 
 variable "allowed_ip" {}

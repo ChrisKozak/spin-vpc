@@ -1,16 +1,14 @@
 
 MY_IP=$(shell curl -s icanhazip.com)
 
-specs := $(wildcard *.k)
-
 all: plan
 
-plan: *.tf get
+plan: *.tf get ssh_keys
 	terraform plan -var allowed_ip=$(MY_IP)
 
 apply: terraform.tfstate
 
-destroy: ~/.ssh/spin-key
+destroy: ssh_keys
 	terraform destroy -force -var allowed_ip=$(MY_IP)
 	rm -f terraform.tfstate terraform.tfstate.backup
 	rm -f .tmp/*_HOST
@@ -18,12 +16,14 @@ destroy: ~/.ssh/spin-key
 get:
 	terraform get
 
-test: export BASTION_HOST = $(shell cat .tmp/BASTION_HOST)
+test: apply .tmp/BASTION_HOST quick-test
 
-test: apply .tmp/BASTION_HOST Gemfile.lock
+quick-test: export BASTION_HOST = $(shell cat .tmp/BASTION_HOST)
+
+quick-test: Gemfile.lock
 	./run-specs.sh
 
-terraform.tfstate: *.tf modules/*/*.tf ~/.ssh/spin-key get
+terraform.tfstate: *.tf ssh_keys get
 	terraform apply -var allowed_ip=$(MY_IP)
 
 .tmp/BASTION_HOST: terraform.tfstate
@@ -33,5 +33,10 @@ terraform.tfstate: *.tf modules/*/*.tf ~/.ssh/spin-key get
 Gemfile.lock: Gemfile
 	bundle install
 
-~/.ssh/spin-key:
-	ssh-keygen -N '' -C 'spin-key' -f ~/.ssh/spin-key
+ssh_keys: ~/.ssh/spin-test-instance-key ~/.ssh/spin-bastion-key
+
+~/.ssh/spin-bastion-key:
+	ssh-keygen -N '' -C 'spin-bastion-key' -f ~/.ssh/spin-bastion-key
+
+~/.ssh/spin-test-instance-key:
+	ssh-keygen -N '' -C 'spin-test-instance-key' -f ~/.ssh/spin-test-instance-key

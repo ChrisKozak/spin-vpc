@@ -30,6 +30,15 @@ TODO: explain how to use this.
 
 I run up a Vagrant box and run this stuff in there. I haven't made it available yet.
 
+## Variables to set
+
+- __aws_region__: Self-explanatory. Default is eu-west-1.
+- __service_name__: This plus the environment variable is used in *Name* tags for things. Each instance of the VPC should have a unique combination of *service_name* + *environment*. If you run up multiple instances with the same *service_name* + *environment* things may get messy, as there are things (e.g. the tests) which assume this won't happen.
+- __environment__: This is assigned to an *Environment* tag. You can set this to the same value across multiple services, each with their own VPC, and then use this tag to integrate them.
+- __allowed_ip__: This is the IP address allowed to connect to the VPC.
+- __bastion_ssh_key_public_file__
+
+
 
 ## What I don't like about this code
 
@@ -43,6 +52,10 @@ I run up a Vagrant box and run this stuff in there. I haven't made it available 
 - CI to automatically test this stuff when I commit.
 - Cleaner integration points. Maybe support Consul? Maybe integrate with statefiles? Shared tfvars files? Other options?
 - Store state in S3
+- Lock the bastion host down much tighter
+- Be more clever about ssh keys. One-off keys for testing, potentially disable the default keypair after provisioning, set up authorized_keys in a configurable way.
+- More sophisticated allowed_ip handling. Currently this assumes all access is from a single IP, which is fine for messing around on your own. Needs to support teams working from different locations, environments spun up from a hosted CI/CD service, not to mention public access for public services. In the latter case, I'd like to default to a controlled set of IP addresses, with an option for production environments which open up things that need to be open (e.g. http/s), but still keep some things (e.g. ssh) limited.
+- Assign DNS names to things
 
 
 
