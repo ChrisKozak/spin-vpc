@@ -56,6 +56,6 @@ I run up a Vagrant box and run this stuff in there. I haven't made it available 
 - Be more clever about ssh keys. One-off keys for testing, potentially disable the default keypair after provisioning, set up authorized_keys in a configurable way.
 - More sophisticated allowed_ip handling. Currently this assumes all access is from a single IP, which is fine for messing around on your own. Needs to support teams working from different locations, environments spun up from a hosted CI/CD service, not to mention public access for public services. In the latter case, I'd like to default to a controlled set of IP addresses, with an option for production environments which open up things that need to be open (e.g. http/s), but still keep some things (e.g. ssh) limited.
 - Assign DNS names to things
-
+- Automatically support the right number of AZ's for the given region. Reliant on resolution to https://github.com/hashicorp/terraform/issues/1497
 
 

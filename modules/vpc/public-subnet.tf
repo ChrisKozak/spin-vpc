@@ -1,10 +1,32 @@
 
+variable "availability_zones" {
+  default = {
+    eu-west-1 = "eu-west-1a,eu-west-1b,eu-west-1c"
+  }
+}
+
+variable "public_ranges" {
+  default = "10.0.1.0/24,10.0.2.0/24,10.0.3.0/24"
+}
+
 resource "aws_internet_gateway" "vpc_module" {
   tags {
     Name = "${var.service_name} Gateway"
     Environment = "${var.environment}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
+}
+
+resource "aws_subnet" "public_subnet_group" {
+  count = "${length(split(",",var.public_ranges))}"
+  tags { 
+    Name = "${var.service_name} Public Subnet in ${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
+    Environment = "${var.environment}"
+  }
+  availability_zone = "${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
+  cidr_block        = "${element(split(",", var.public_ranges), count.index)}"
+  vpc_id = "${aws_vpc.vpc_module.id}"
+  map_public_ip_on_launch = true
 }
 
 resource "aws_subnet" "public_subnet" {
