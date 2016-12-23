@@ -23,7 +23,7 @@ describe ec2_running('SSH Bastion Host') do
     end
 
     describe interface('eth0') do
-      its(:ipv4_address) { should match /10\.0\.1\./ }
+      its(:ipv4_address) { should match /10\.0\.[123]\./ }
     end
   end
 

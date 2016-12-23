@@ -26,7 +26,7 @@ describe ec2_running('Spin VPC Test Server') do
     end
 
     describe interface('eth0') do
-      its(:ipv4_address) { should match /10\.0\.2\./ }
+      its(:ipv4_address) { should match /10\.0\.4\./ }
     end
   end
 

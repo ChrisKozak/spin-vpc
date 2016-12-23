@@ -6,6 +6,7 @@ variable "aws_region" {
 variable "aws_amis" {
   default = {
     eu-west-1 = "ami-ac772edf"
+    eu-west-2 = "???"
   }
 }
 
