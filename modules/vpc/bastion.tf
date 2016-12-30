@@ -9,6 +9,9 @@ resource "aws_instance" "bastion_host" {
   vpc_security_group_ids = ["${aws_security_group.bastion_host_access.id}"]
   subnet_id = "${aws_subnet.public_subnet.1.id}"
   key_name = "${aws_key_pair.bastion_ssh_key_pair.id}"
+  depends_on = [
+    "aws_subnet.public_subnet"
+  ]
 }
 
 resource "aws_key_pair" "bastion_ssh_key_pair" {

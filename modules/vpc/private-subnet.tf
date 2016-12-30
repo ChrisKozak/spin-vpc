@@ -19,7 +19,9 @@ resource "aws_nat_gateway" "vpc_module" {
   # allocation_id = "${element(aws_eip.nat_eip.*.id, count.index)}"
   subnet_id = "${aws_subnet.public_subnet.1.id}"
   allocation_id = "${aws_eip.nat_eip.id}"
-  depends_on = ["aws_internet_gateway.vpc_module"]
+  depends_on = [
+    "aws_subnet.public_subnet"
+  ]
 }
 
 resource "aws_route_table" "private_routes" {
@@ -34,9 +36,11 @@ resource "aws_route" "private_nat_gateway_route" {
   # count = "${length(split(",", lookup(var.availability_zones, var.aws_region)))}"
   route_table_id = "${aws_route_table.private_routes.id}"
   destination_cidr_block = "0.0.0.0/0"
-  depends_on = ["aws_route_table.private_routes"]
+  depends_on = [
+    "aws_route_table.private_routes",
+    "aws_nat_gateway.vpc_module"
+  ]
   nat_gateway_id = "${aws_nat_gateway.vpc_module.id}"
-  # nat_gateway_id = "${element(aws_nat_gateway.vpc_module.*.id, count.index)}"
 }
 
 resource "aws_route_table_association" "routes_for_private_subnet" {

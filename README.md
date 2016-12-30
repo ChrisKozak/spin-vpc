@@ -1,5 +1,8 @@
+# WARNING!
 
-**WARNING!** This code is intended as an example that you can copy and use, rather than a supported module that you should import. I reserve the right to completely change it in dangerous and destructive ways, with complete disregard for backwards compatibility. Also, I make no guarantees that this code works as is. There's a pretty good chance that it's broken, due to neglect or different usage.
+This code is intended as an example that you can copy and use, rather than a supported module that you should import. I reserve the right to completely change it in dangerous and destructive ways, with complete disregard for backwards compatibility.
+
+Also, I make no guarantees that this code works as you find it. There's a pretty good chance that it's broken, because I'm in the middle of a change, because I'm using it in some way specific to myself, because I've neglected it, or for some other reason.
 
 
 ## What this is
