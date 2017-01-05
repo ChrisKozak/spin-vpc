@@ -3,6 +3,9 @@ MY_IP=$(shell curl -s icanhazip.com)
 
 all: plan
 
+validate:
+	terraform validate
+
 plan: *.tf get ssh_keys
 	terraform plan -var allowed_ip=$(MY_IP)
 
