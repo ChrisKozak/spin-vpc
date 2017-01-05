@@ -1,0 +1,15 @@
+pipelines:
+  validate:
+    group: cloud_spin
+    materials:
+      spin_vpc_git:
+        git: https://github.com/kief/spin-vpc.git
+    stages:
+      - validate:
+          jobs:
+            validate_syntax:
+              tasks:
+                - exec:
+                    command: make
+
+
