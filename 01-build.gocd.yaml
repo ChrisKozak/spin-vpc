@@ -10,6 +10,5 @@ pipelines:
             validate_syntax:
               tasks:
                 - exec:
-                    command: make
-
+                    command: make validate
 
