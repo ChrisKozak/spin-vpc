@@ -1,5 +1,5 @@
 pipelines:
-  validate:
+  spin_vpc:
     group: cloud_spin
     materials:
       spin_vpc_git:
@@ -10,5 +10,7 @@ pipelines:
             validate_syntax:
               tasks:
                 - exec:
-                    command: make validate
+                    command: make
+                    arguments:
+                      - validate
 
