@@ -18,11 +18,11 @@ variable "aws_amis" {
 }
 
 variable "test_instance_ssh_key_public_file" {
-  default = "/home/vagrant/.ssh/spin-test-instance-key.pub"
+  default = "~/.ssh/spin-test-instance-key.pub"
 }
 
 variable "bastion_ssh_key_public_file" {
-  default = "/home/vagrant/.ssh/spin-bastion-key.pub"
+  default = "~/.ssh/spin-bastion-key.pub"
 }
 
 variable "allowed_ip" {}

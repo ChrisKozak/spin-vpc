@@ -15,7 +15,7 @@ pipelines:
                       - validate
       - plan:
           jobs:
-            validate_syntax:
+            run_plan:
               tasks:
                 - exec:
                     command: make
