@@ -13,4 +13,12 @@ pipelines:
                     command: make
                     arguments:
                       - validate
+      - plan:
+          jobs:
+            validate_syntax:
+              tasks:
+                - exec:
+                    command: make
+                    arguments:
+                      - plan
 
