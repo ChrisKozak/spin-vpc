@@ -22,16 +22,16 @@ pipelines:
                     arguments:
                       - plan
 
-      - test:
-          jobs:
-            run_test:
-              tasks:
-                - exec:
-                    command: make
-                    arguments:
-                      - test
-                - exec:
-                    command: make
-                    arguments:
-                      - destroy
+      # - test:
+      #     jobs:
+      #       run_test:
+      #         tasks:
+      #           - exec:
+      #               command: make
+      #               arguments:
+      #                 - test
+      #           - exec:
+      #               command: make
+      #               arguments:
+      #                 - destroy
 
