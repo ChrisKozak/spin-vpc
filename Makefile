@@ -8,15 +8,21 @@ all: plan
 validate:
 	terraform validate
 
-plan: *.tf get ssh_keys remote_state
+plan: *.tf get ssh_keys remote-state
 	terraform plan -var allowed_ip=$(MY_IP)
 
 apply: terraform.tfstate
 
-destroy: ssh_keys
+destroy: ssh_keys remote-state
 	terraform destroy -force -var allowed_ip=$(MY_IP)
+	rm -rf .terraform
 	rm -f terraform.tfstate terraform.tfstate.backup
-	rm -f .tmp/*_HOST
+	rm -rf .tmp
+
+local-clean:
+	rm -rf .terraform
+	rm -f terraform.tfstate terraform.tfstate.backup
+	rm -rf .tmp
 
 get:
 	terraform get
@@ -28,17 +34,17 @@ quick-test: export BASTION_HOST = $(shell cat .tmp/BASTION_HOST)
 quick-test: Gemfile.lock
 	./run-specs.sh
 
-terraform.tfstate: *.tf ssh_keys remote_state get
+terraform.tfstate: *.tf ssh_keys remote-state get
 	terraform apply -var allowed_ip=$(MY_IP)
 
-remote_state: check-env
+remote-state: check-env
 	terraform remote config \
     -backend=s3 \
     -backend-config="bucket=$(BASE_DOMAIN).tfstate" \
     -backend-config="key=$(ENVIRONMENT)/vpc-module-test/terraform.tfstate" \
     -backend-config="region=eu-west-1"
 
-.tmp/BASTION_HOST: terraform.tfstate remote_state
+.tmp/BASTION_HOST: terraform.tfstate remote-state
 	mkdir -p .tmp
 	terraform output | awk -F' *= *' '$$1 == "bastion_host_ip" { print $$2 }' > .tmp/BASTION_HOST
 
