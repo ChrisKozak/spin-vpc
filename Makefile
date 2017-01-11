@@ -9,12 +9,12 @@ validate:
 	terraform validate
 
 plan: *.tf get ssh_keys remote-state
-	terraform plan -var allowed_ip=$(MY_IP)
+	terraform plan -var allowed_ip=$(MY_IP) -var environment=$(ENVIRONMENT)
 
 apply: terraform.tfstate
 
 destroy: ssh_keys remote-state
-	terraform destroy -force -var allowed_ip=$(MY_IP)
+	terraform destroy -force -var allowed_ip=$(MY_IP) -var environment=$(ENVIRONMENT)
 	rm -rf .terraform
 	rm -f terraform.tfstate terraform.tfstate.backup
 	rm -rf .tmp
@@ -35,7 +35,7 @@ quick-test: Gemfile.lock
 	./run-specs.sh
 
 terraform.tfstate: *.tf ssh_keys remote-state get
-	terraform apply -var allowed_ip=$(MY_IP)
+	terraform apply -var allowed_ip=$(MY_IP) -var environment=$(ENVIRONMENT)
 
 remote-state: check-env
 	terraform remote config \

@@ -1,7 +1,4 @@
 
-variable "environment" {
-  default = "VPC Testing Sandbox"
-}
 
 variable "aws_region" {
   default = "eu-west-1"
@@ -25,4 +22,5 @@ variable "bastion_ssh_key_public_file" {
   default = "~/.ssh/spin-bastion-key.pub"
 }
 
+variable "environment" {}
 variable "allowed_ip" {}
