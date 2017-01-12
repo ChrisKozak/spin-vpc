@@ -6,7 +6,7 @@ resource "aws_key_pair" "test_instance_keypair" {
 
 resource "aws_instance" "test_server" {
   tags {
-    Name = "Spin VPC Test Server"
+    Name = "VPC Test for ${var.environment}"
     Environment = "${var.environment}"
   }
   instance_type = "t2.micro"

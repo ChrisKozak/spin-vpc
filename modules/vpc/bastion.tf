@@ -1,7 +1,7 @@
 
 resource "aws_instance" "bastion_host" {
   tags {
-    Name = "SSH Bastion Host"
+    Name = "Bastion for ${var.environment}"
     Environment = "${var.environment}"
   }
   instance_type = "t2.micro"

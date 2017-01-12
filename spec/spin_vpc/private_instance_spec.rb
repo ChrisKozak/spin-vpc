@@ -1,7 +1,7 @@
 require 'spec_helper_remote'
 require 'spec_helper_aws'
 
-describe ec2_running('Spin VPC Test Server') do
+describe ec2_running('VPC Test for sandbox') do
 
   before(:all) do
     target_host = described_class.private_ip
