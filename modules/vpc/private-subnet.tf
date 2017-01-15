@@ -3,6 +3,7 @@ resource "aws_subnet" "private_subnet" {
   tags {
     Name = "${var.service_name} Private Subnet"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
   cidr_block = "10.0.4.0/24"
@@ -29,6 +30,7 @@ resource "aws_route_table" "private_routes" {
   tags {
     Name = "${var.service_name} Private Route Table"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
 }
 
@@ -53,6 +55,7 @@ resource "aws_security_group" "common_access_private_hosts" {
   tags {
     Name = "${var.service_name} Common Rules for Private Subnet"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   name = "common_access_private_hosts"
   vpc_id = "${aws_vpc.vpc_module.id}"

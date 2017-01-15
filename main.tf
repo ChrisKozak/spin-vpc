@@ -6,7 +6,15 @@ provider "aws" {
 
 module "vpc" {
   source = "modules/vpc"
-  service_name = "Spin VPC Tester"
+  service_name = "test-vpc1"
+  environment = "${var.environment}"
+  allowed_ip = "${var.allowed_ip}"
+  bastion_ssh_key_public_file = "${var.bastion_ssh_key_public_file}"
+}
+
+module "vpc2" {
+  source = "modules/vpc"
+  service_name = "test-vpc2"
   environment = "${var.environment}"
   allowed_ip = "${var.allowed_ip}"
   bastion_ssh_key_public_file = "${var.bastion_ssh_key_public_file}"

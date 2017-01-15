@@ -3,6 +3,7 @@ resource "aws_vpc" "vpc_module" {
   tags {
     Name = "${var.service_name} VPC"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -12,6 +13,7 @@ resource "aws_security_group" "default_security" {
   tags {
     Name = "${var.service_name} Inbound SSH"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   name = "inbound_ssh"
   vpc_id = "${aws_vpc.vpc_module.id}"

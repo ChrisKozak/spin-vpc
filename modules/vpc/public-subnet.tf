@@ -14,6 +14,7 @@ resource "aws_internet_gateway" "vpc_module" {
   tags {
     Name = "${var.service_name} Gateway"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
 }
@@ -23,6 +24,7 @@ resource "aws_subnet" "public_subnet" {
   tags { 
     Name = "${var.service_name} Public Subnet in ${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   availability_zone = "${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
   cidr_block        = "${element(split(",", var.public_ranges), count.index)}"
@@ -45,6 +47,7 @@ resource "aws_route_table" "public_routes" {
   tags {
     Name = "${var.service_name} Public Route Table ${count.index}"
     Environment = "${var.environment}"
+    Service = "${var.service_name}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
 }
