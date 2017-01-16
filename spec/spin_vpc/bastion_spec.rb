@@ -1,7 +1,7 @@
 require 'spec_helper_remote'
 require 'spec_helper_aws'
 
-describe ec2_running('Bastion for sandbox') do
+describe ec2_running('Bastion for test-vpc1-sandbox') do
 
   before(:all) do
     target_host = described_class.public_ip

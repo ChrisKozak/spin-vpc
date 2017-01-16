@@ -12,9 +12,9 @@ variable "public_ranges" {
 
 resource "aws_internet_gateway" "vpc_module" {
   tags {
-    Name = "${var.service_name} Gateway"
+    Name = "${var.vpc_name} Gateway"
     Environment = "${var.environment}"
-    Service = "${var.service_name}"
+    Vpc = "${var.vpc_name}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
 }
@@ -22,9 +22,9 @@ resource "aws_internet_gateway" "vpc_module" {
 resource "aws_subnet" "public_subnet" {
   count = "${length(split(",", lookup(var.availability_zones, var.aws_region)))}"
   tags { 
-    Name = "${var.service_name} Public Subnet in ${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
+    Name = "${var.vpc_name} Public Subnet in ${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
     Environment = "${var.environment}"
-    Service = "${var.service_name}"
+    Vpc = "${var.vpc_name}"
   }
   availability_zone = "${element(split(",", lookup(var.availability_zones, var.aws_region)),count.index)}"
   cidr_block        = "${element(split(",", var.public_ranges), count.index)}"
@@ -34,7 +34,7 @@ resource "aws_subnet" "public_subnet" {
 
 # resource "aws_subnet" "public_subnet" {
 #   tags {
-#     Name = "${var.service_name} Public Subnet"
+#     Name = "${var.vpc_name} Public Subnet"
 #     Environment = "${var.environment}"
 #   }
 #   vpc_id = "${aws_vpc.vpc_module.id}"
@@ -45,9 +45,9 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_route_table" "public_routes" {
   count = "${length(split(",", lookup(var.availability_zones, var.aws_region)))}"
   tags {
-    Name = "${var.service_name} Public Route Table ${count.index}"
+    Name = "${var.vpc_name} Public Route Table ${count.index}"
     Environment = "${var.environment}"
-    Service = "${var.service_name}"
+    Vpc = "${var.vpc_name}"
   }
   vpc_id = "${aws_vpc.vpc_module.id}"
 }

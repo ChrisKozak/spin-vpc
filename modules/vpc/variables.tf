@@ -10,7 +10,7 @@ variable "aws_amis" {
   }
 }
 
-variable "service_name" {}
+variable "vpc_name" {}
 
 variable "environment" {}
 

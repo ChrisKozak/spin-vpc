@@ -1,9 +1,9 @@
 
 resource "aws_instance" "bastion_host" {
   tags {
-    Name = "Bastion for ${var.service_name}-${var.environment}"
+    Name = "Bastion for ${var.vpc_name}-${var.environment}"
     Environment = "${var.environment}"
-    Service = "${var.service_name}"
+    Vpc = "${var.vpc_name}"
   }
   instance_type = "t2.micro"
   ami = "${lookup(var.aws_amis, var.aws_region)}"
@@ -14,7 +14,7 @@ resource "aws_instance" "bastion_host" {
 }
 
 resource "aws_key_pair" "bastion_ssh_key_pair" {
-  key_name   = "bastion-${var.service_name}-${var.environment}"
+  key_name   = "bastion-${var.vpc_name}-${var.environment}"
   public_key = "${file(var.bastion_ssh_key_public_file)}"
 }
 
@@ -29,9 +29,9 @@ resource "aws_eip_association" "bastion_eip" {
 
 resource "aws_security_group" "bastion_host_access" {
   tags {
-    Name = "${var.service_name} Bastion Security Rules"
+    Name = "${var.vpc_name} Bastion Security Rules"
     Environment = "${var.environment}"
-    Service = "${var.service_name}"
+    Vpc = "${var.vpc_name}"
   }
   name = "bastion_security"
   vpc_id = "${aws_vpc.vpc_module.id}"
